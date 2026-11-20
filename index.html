@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07152f">
+<meta name="description" content="WORLD CONNECT BD — One World. One Network. A next-generation hybrid communication platform.">
+<title>WORLD CONNECT BD | One World. One Network.</title>
+
+<style>
+:root{
+ --bg:#f3f6fc;--surface:#fff;--surface2:#edf2fa;
+ --text:#17243a;--muted:#718096;--primary:#1769ff;
+ --primary2:#00b8d9;--border:#e2e9f3;
+ --shadow:0 8px 30px rgba(20,45,90,.07);
+ --radius:18px;
+}
+body.dark{
+ --bg:#081426;--surface:#101f35;--surface2:#182b45;
+ --text:#edf4ff;--muted:#9aacc5;--border:#263b57;
+ --shadow:0 8px 30px rgba(0,0,0,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+ background:var(--bg);color:var(--text);
+ transition:.25s;min-height:100vh;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}
+.sidebar{
+ background:var(--surface);border-right:1px solid var(--border);
+ padding:22px 16px;position:sticky;top:0;height:100vh;
+ display:flex;flex-direction:column;z-index:10;
+}
+.brand{display:flex;align-items:center;gap:11px;padding:5px 8px 25px}
+.logo{
+ width:43px;height:43px;border-radius:14px;
+ display:grid;place-items:center;color:white;font-weight:900;
+ background:linear-gradient(135deg,#1465ff,#00c6dc);
+ box-shadow:0 6px 18px #1769ff45;font-size:16px;
+}
+.brand h2{font-size:16px;letter-spacing:.4px}
+.brand small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.nav-title{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:1.5px;padding:15px 10px 8px}
+.nav{display:grid;gap:5px}
+.nav button{
+ border:0;background:transparent;color:var(--muted);
+ text-align:left;padding:12px;border-radius:12px;
+ display:flex;align-items:center;gap:12px;font-size:13px;
+ transition:.2s;
+}
+.nav button:hover,.nav button.active{background:var(--surface2);color:var(--primary);font-weight:700}
+.nav .ico{font-size:18px;width:22px;text-align:center}
+.sidebar-bottom{margin-top:auto}
+.status{
+ background:var(--surface2);padding:14px;border-radius:14px;
+ font-size:12px;color:var(--muted);line-height:1.6;
+}
+.status strong{color:var(--text)}
+.main{min-width:0}
+.topbar{
+ height:75px;background:var(--surface);border-bottom:1px solid var(--border);
+ display:flex;align-items:center;justify-content:space-between;
+ padding:0 30px;position:sticky;top:0;z-index:8;
+}
+.search{max-width:420px;width:45%;position:relative}
+.search input{
+ width:100%;background:var(--surface2);border:1px solid transparent;
+ border-radius:12px;padding:12px 15px 12px 40px;color:var(--text);outline:none;
+}
+.search span{position:absolute;left:14px;top:10px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{
+ width:39px;height:39px;border:1px solid var(--border);
+ background:var(--surface);color:var(--text);border-radius:12px;
+}
+.avatar{
+ width:37px;height:37px;border-radius:50%;display:grid;place-items:center;
+ background:linear-gradient(135deg,#1769ff,#00c6dc);color:white;font-weight:800;
+}
+.content{max-width:1450px;margin:auto;padding:28px}
+.page{display:none}
+.page.active{display:block}
+.page-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:23px}
+.page-heading h1{font-size:25px;letter-spacing:-.5px}
+.page-heading p{font-size:13px;color:var(--muted);margin-top:6px}
+.btn{
+ border:0;border-radius:11px;padding:11px 16px;
+ background:var(--primary);color:white;font-weight:700;font-size:12px;
+}
+.btn.secondary{background:var(--surface2);color:var(--text)}
+.btn.danger{background:#e84b62}
+.card{
+ background:var(--surface);border:1px solid var(--border);
+ border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);
+}
+.grid{display:grid;gap:17px}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:20px}
+.stat{display:flex;align-items:center;gap:13px}
+.stat-icon{
+ width:45px;height:45px;border-radius:14px;display:grid;place-items:center;
+ background:#1769ff15;font-size:21px;
+}
+.stat small{color:var(--muted);font-size:11px}
+.stat h2{font-size:22px;margin-top:3px}
+.dashboard-grid{grid-template-columns:minmax(0,1.6fr) minmax(260px,.8fr)}
+.section-title{font-size:15px;font-weight:800;margin-bottom:16px}
+.notice{
+ padding:14px;border-radius:13px;background:#fff5dc;color:#755314;
+ border:1px solid #f2dfaa;font-size:12px;line-height:1.6;margin-bottom:12px;
+}
+body.dark .notice{background:#40351d;color:#ffe3a0;border-color:#675328}
+.notice:last-child{margin-bottom:0}
+.notice strong{display:block;margin-bottom:4px}
+.activity{display:grid;gap:17px}
+.activity-item{display:flex;gap:12px;font-size:12px;color:var(--muted);line-height:1.5}
+.activity-item b{color:var(--text);display:block}
+.dot{width:9px;height:9px;background:var(--primary);border-radius:50%;margin-top:5px;flex-shrink:0}
+.feed-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px}
+.composer textarea{
+ width:100%;border:1px solid var(--border);background:var(--surface2);
+ color:var(--text);border-radius:12px;padding:14px;resize:vertical;min-height:85px;outline:none;
+}
+.composer-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.post{margin-top:15px}
+.post-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.post-head small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.post-body{font-size:13px;line-height:1.8;white-space:pre-wrap}
+.post-actions{display:flex;gap:9px;border-top:1px solid var(--border);margin-top:14px;padding-top:12px}
+.post-actions button{border:0;background:transparent;color:var(--muted);font-size:12px;padding:7px}
+.post-actions button:hover{color:var(--primary)}
+.chat-layout{display:grid;grid-template-columns:290px minmax(0,1fr);height:650px;overflow:hidden}
+.chat-list{border-right:1px solid var(--border);padding-right:15px;overflow:auto}
+.chat-person{display:flex;gap:10px;align-items:center;padding:13px 8px;border-radius:12px;cursor:pointer}
+.chat-person:hover,.chat-person.selected{background:var(--surface2)}
+.chat-person small{color:var(--muted);font-size:11px}
+.chat-window{display:flex;flex-direction:column;min-width:0;padding-left:18px}
+.chat-header{display:flex;align-items:center;gap:10px;padding-bottom:15px;border-bottom:1px solid var(--border)}
+.messages{flex:1;overflow:auto;padding:18px 5px;display:flex;flex-direction:column;gap:12px}
+.bubble{max-width:75%;padding:11px 14px;border-radius:15px;background:var(--surface2);font-size:12px;line-height:1.6;align-self:flex-start;overflow-wrap:anywhere}
+.bubble.mine{align-self:flex-end;background:var(--primary);color:white}
+.chat-compose{display:flex;gap:9px;padding-top:12px;border-top:1px solid var(--border)}
+.chat-compose input{flex:1;min-width:0;border:1px solid var(--border);background:var(--surface2);color:var(--text);padding:12px;border-radius:12px;outline:none}
+.contact-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.contact{text-align:center}
+.contact .avatar{margin:0 auto 10px;width:55px;height:55px;font-size:18px}
+.contact p{color:var(--muted);font-size:11px;margin:5px 0 13px}
+.settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.setting-row{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:14px 0;border-bottom:1px solid var(--border)}
+.setting-row:last-child{border:0}
+.setting-row small{display:block;color:var(--muted);margin-top:4px;font-size:11px}
+.field{margin:12px 0}
+.field label{display:block;font-size:12px;font-weight:700;margin-bottom:7px}
+.field input,.field textarea,.field select{
+ width:100%;padding:12px;border:1px solid var(--border);
+ border-radius:11px;background:var(--surface2);color:var(--text);outline:none;
+}
+.field textarea{min-height:80px;resize:vertical}
+.toggle{accent-color:var(--primary);width:18px;height:18px}
+.empty{text-align:center;color:var(--muted);padding:35px 10px;font-size:13px}
+.footer{text-align:center;color:var(--muted);font-size:10px;padding:25px}
+.mobile-menu{display:none}
+.modal{
+ display:none;position:fixed;inset:0;background:#061329b8;z-index:30;
+ align-items:center;justify-content:center;padding:15px;
+}
+.modal.show{display:flex}
+.modal-box{width:min(460px,100%);background:var(--surface);border-radius:20px;padding:24px;max-height:90vh;overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.toast{
+ position:fixed;bottom:25px;right:25px;background:#10233e;color:white;
+ padding:13px 18px;border-radius:12px;font-size:12px;z-index:50;
+ opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.login-screen{
+ display:none;position:fixed;inset:0;z-index:40;background:var(--bg);
+ align-items:center;justify-content:center;padding:20px;
+}
+.login-screen.show{display:flex}
+.login-box{width:min(420px,100%);text-align:center}
+.login-box .logo{margin:0 auto 15px;width:58px;height:58px;font-size:20px}
+.login-box h1{font-size:25px;margin-bottom:8px}
+.login-box p{color:var(--muted);font-size:12px;line-height:1.7}
+.login-box .field{text-align:left}
+.login-box .btn{width:100%;padding:14px;margin-top:8px}
+.hero{
+ background:linear-gradient(120deg,#071b43,#0d4ca0 65%,#087b9b);
+ color:white;border-radius:20px;padding:25px;margin-bottom:20px;
+ display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.hero h2{font-size:23px;margin-bottom:8px}
+.hero p{font-size:12px;color:#d4e7ff;line-height:1.7}
+.hero-mark{font-size:60px;opacity:.8}
+@media(max-width:1000px){
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .dashboard-grid{grid-template-columns:1fr}
+ .contact-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:720px){
+ .app{grid-template-columns:1fr}
+ .sidebar{
+  position:fixed;left:-270px;width:250px;transition:.25s;
+  box-shadow:var(--shadow)
+ }
+ .sidebar.open{left:0}
+ .mobile-menu{display:inline-block}
+ .topbar{padding:0 14px;height:65px}
+ .content{padding:18px 13px}
+ .search{width:52%}
+ .search input{font-size:11px}
+ .page-heading h1{font-size:21px}
+ .stats{gap:10px}
+ .stat{padding:13px}
+ .stat h2{font-size:19px}
+ .stat-icon{width:38px;height:38px}
+ .feed-layout{grid-template-columns:1fr}
+ .chat-layout{grid-template-columns:95px minmax(0,1fr);height:600px;padding:12px}
+ .chat-list{padding-right:6px}
+ .chat-person{justify-content:center;padding:10px 2px}
+ .chat-person div:not(.avatar){display:none}
+ .chat-window{padding-left:8px}
+ .bubble{max-width:90%}
+ .settings-grid{grid-template-columns:1fr}
+ .hero{padding:19px}
+ .hero h2{font-size:19px}
+ .hero-mark{font-size:40px}
+}
+@media(max-width:390px){
+ .stats{grid-template-columns:1fr 1fr}
+ .top-actions{gap:5px}
+ .icon-btn{width:34px;height:34px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+ <div class="brand">
+  <div class="logo">WCB</div>
+  <div><h2>WORLD CONNECT BD</h2><small>ONE WORLD. ONE NETWORK.</small></div>
+ </div>
+
+ <div class="nav-title">WORKSPACE</div>
+ <nav class="nav">
+  <button class="active" data-page="dashboard"><span class="ico">▦</span>Dashboard</button>
+  <button data-page="messages"><span class="ico">✉</span>Messages</button>
+  <button data-page="feed"><span class="ico">◉</span>Social Feed</button>
+  <button data-page="contacts"><span class="ico">♧</span>Contacts</button>
+  <button data-page="notifications"><span class="ico">♢</span>Notifications</button>
+ </nav>
+ <div class="nav-title">PERSONAL</div>
+ <nav class="nav">
+  <button data-page="profile"><span class="ico">◎</span>My Profile</button>
+  <button data-page="settings"><span class="ico">⚙</span>Settings</button>
+ </nav>
+ <div class="sidebar-bottom">
+  <div class="status">
+   <strong>● Prototype Mode</strong><br>
+   WCB Version 1.0.0<br>
+   Online interface demo
+  </div>
+ </div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+ <div style="display:flex;align-items:center;gap:12px;min-width:0">
+  <button class="icon-btn mobile-menu" id="menuBtn">☰</button>
+  <div class="search"><span>⌕</span><input id="searchInput" placeholder="Search WCB..."></div>
+ </div>
+ <div class="top-actions">
+  <button class="icon-btn" onclick="showPage('notifications')" title="Notifications">♢</button>
+  <button class="icon-btn" id="themeBtn" title="Change theme">☾</button>
+  <div class="avatar" id="topAvatar">W</div>
+ </div>
+</header>
+
+<div class="content">
+
+<section class="page active" id="page-dashboard">
+ <div class="hero">
+  <div>
+   <h2>Welcome to WORLD CONNECT BD</h2>
+   <p>One World. One Network.<br>Connecting people, communities and possibilities.</p>
+   <button class="btn" style="background:white;color:#1455a5;margin-top:15px" onclick="showPage('feed')">Explore Community →</button>
+  </div>
+  <div class="hero-mark">🌐</div>
+ </div>
+
+ <div class="page-heading">
+  <div><h1>Dashboard</h1><p>Your digital connection hub</p></div>
+  <button class="btn" onclick="showPage('messages')">✉ Open Messages</button>
+ </div>
+
+ <div class="grid stats">
+  <div class="card stat"><div class="stat-icon">👥</div><div><small>Contacts</small><h2 id="contactCount">3</h2></div></div>
+  <div class="card stat"><div class="stat-icon">✉</div><div><small>Messages</small><h2 id="messageCount">0</h2></div></div>
+  <div class="card stat"><div class="stat-icon">◉</div><div><small>Community Posts</small><h2 id="postCount">2</h2></div></div>
+  <div class="card stat"><div class="stat-icon">♢</div><div><small>Notifications</small><h2 id="notificationCount">1</h2></div></div>
+ </div>
+
+ <div class="grid dashboard-grid">
+  <div class="card">
+   <div class="section-title">📢 Important Notices</div>
+   <div id="dashboardNotices">
+    <div class="notice"><strong>Welcome to WCB!</strong>Welcome to the first prototype of WORLD CONNECT BD. Explore the demo features.</div>
+   </div>
+  </div>
+  <div class="card">
+   <div class="section-title">Recent Activity</div>
+   <div class="activity">
+    <div class="activity-item"><span class="dot"></span><div><b>WCB Prototype launched</b>Welcome to your communication hub.</div></div>
+    <div class="activity-item"><span class="dot"></span><div><b>Community is ready</b>Explore sample posts and interactions.</div></div>
+    <div class="activity-item"><span class="dot"></span><div><b>Settings available</b>Customize your demo experience.</div></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-messages">
+ <div class="page-heading"><div><h1>Messages</h1><p>Your conversations in one place</p></div><span class="badge">DEMO</span></div>
+ <div class="card chat-layout">
+  <div class="chat-list">
+   <div class="section-title">Chats</div>
+   <div class="chat-person selected" onclick="selectChat('WCB Support','W')">
+    <div class="avatar">W</div><div><b style="font-size:12px">WCB Support</b><br><small>Welcome to WCB</small></div>
+   </div>
+   <div class="chat-person" onclick="selectChat('Community Team','C')">
+    <div class="avatar">C</div><div><b style="font-size:12px">Community Team</b><br><small>Community updates</small></div>
+   </div>
+   <div class="chat-person" onclick="selectChat('Demo Contact','D')">
+    <div class="avatar">D</div><div><b style="font-size:12px">Demo Contact</b><br><small>Sample conversation</small></div>
+   </div>
+  </div>
+  <div class="chat-window">
+   <div class="chat-header"><div class="avatar" id="chatAvatar">W</div><div><b id="chatName">WCB Support</b><small style="display:block;color:var(--muted);font-size:10px">Demo conversation</small></div></div>
+   <div class="messages" id="messages">
+    <div class="bubble">Welcome to WORLD CONNECT BD! This is a local demo conversation.</div>
+    <div class="bubble mine">Thank you. I am exploring WCB.</div>
+   </div>
+   <form class="chat-compose" id="chatForm">
+    <input id="chatInput" placeholder="Write a message..." autocomplete="off">
+    <button class="btn">Send ➤</button>
+   </form>
+   <small style="color:var(--muted);font-size:10px;margin-top:8px">Demo only: messages are saved in this browser, not delivered to other users.</small>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-feed">
+ <div class="page-heading"><div><h1>Social Feed</h1><p>Discover ideas and share updates</p></div></div>
+ <div class="feed-layout">
+  <div>
+   <div class="card composer">
+    <div class="post-head"><div class="avatar" id="feedAvatar">W</div><b id="feedName">WCB Member</b></div>
+    <form id="postForm">
+     <textarea id="postInput" placeholder="What's happening in your world?"></textarea>
+     <div class="composer-bottom"><small style="color:var(--muted)">Share something positive with the community.</small><button class="btn">Publish Post</button></div>
+    </form>
+   </div>
+   <div id="postsContainer"></div>
+  </div>
+  <div>
+   <div class="card">
+    <div class="section-title">🌐 About WCB</div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.8">WORLD CONNECT BD is a planned hybrid communication platform focused on bringing people and communities closer through modern digital technology.</p>
+   </div>
+   <div class="card" style="margin-top:15px">
+    <div class="section-title">Community Guidelines</div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.9">• Respect everyone<br>• Share responsibly<br>• Protect personal information<br>• Keep the community welcoming</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-contacts">
+ <div class="page-heading"><div><h1>Contacts</h1><p>Your sample connection list</p></div><button class="btn" onclick="toast('Real contact sync will be added in a future version.')">＋ Add Contact</button></div>
+ <div class="grid contact-grid" id="contactsGrid">
+  <div class="card contact"><div class="avatar">W</div><b>WCB Support</b><p>Platform support · Demo</p><button class="btn secondary" onclick="showPage('messages')">Message</button></div>
+  <div class="card contact"><div class="avatar">C</div><b>Community Team</b><p>Community · Demo</p><button class="btn secondary" onclick="showPage('messages')">Message</button></div>
+  <div class="card contact"><div class="avatar">D</div><b>Demo Contact</b><p>Sample user · Demo</p><button class="btn secondary" onclick="showPage('messages')">Message</button></div>
+ </div>
+</section>
+
+<section class="page" id="page-notifications">
+ <div class="page-heading"><div><h1>Notifications</h1><p>Stay updated with your activity</p></div><button class="btn secondary" onclick="toast('All notifications marked as read in this demo.')">Mark all as read</button></div>
+ <div class="card" id="notificationList">
+  <div class="activity-item"><span class="dot"></span><div><b>Welcome to WORLD CONNECT BD</b>Your WCB prototype is ready to explore.</div></div>
+ </div>
+</section>
+
+<section class="page" id="page-profile">
+ <div class="page-heading"><div><h1>My Profile</h1><p>Manage your demo profile information</p></div></div>
+ <div class="card" style="max-width:650px">
+  <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px">
+   <div class="avatar" style="width:65px;height:65px;font-size:22px" id="profileAvatar">W</div>
+   <div><h2 id="profileDisplayName">WCB Member</h2><small style="color:var(--muted)">WORLD CONNECT BD Member · Demo</small></div>
+  </div>
+  <form id="profileForm">
+   <div class="field"><label>Display Name</label><input id="nameInput" value="WCB Member" maxlength="40"></div>
+   <div class="field"><label>About Me</label><textarea id="bioInput" placeholder="Write a short introduction..."></textarea></div>
+   <div class="field"><label>Location (optional)</label><input id="locationInput" placeholder="Your city or country"></div>
+   <button class="btn">Save Profile</button>
+  </form>
+  <p style="font-size:10px;color:var(--muted);margin-top:14px">This profile is stored only in your browser. Do not enter sensitive personal information in this demo.</p>
+ </div>
+</section>
+
+<section class="page" id="page-settings">
+ <div class="page-heading"><div><h1>Settings & Control Center</h1><p>Customize your WCB experience</p></div></div>
+ <div class="grid settings-grid">
+  <div class="card">
+   <div class="section-title">⚙ General Settings</div>
+   <div class="setting-row"><div><b style="font-size:13px">Dark Mode</b><small>Change appearance</small></div><input type="checkbox" class="toggle" id="darkToggle"></div>
+   <div class="setting-row"><div><b style="font-size:13px">Language</b><small>Interface language</small></div><select id="languageSelect" style="padding:8px;border-radius:8px;background:var(--surface2);color:var(--text);border:1px solid var(--border)"><option value="bn">বাংলা</option><option value="en">English</option></select></div>
+  </div>
+  <div class="card">
+   <div class="section-title">📢 Notice Management</div>
+   <p style="font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:12px">Create a notice to display on the dashboard. This is a local demo feature.</p>
+   <form id="noticeForm">
+    <div class="field"><label>Notice Title</label><input id="noticeTitle" required maxlength="70" placeholder="Notice title"></div>
+    <div class="field"><label>Notice Details</label><textarea id="noticeText" required maxlength="350" placeholder="Write notice details"></textarea></div>
+    <button class="btn">＋ Publish Notice</button>
+   </form>
+   <div id="noticeManageList" style="margin-top:15px"></div>
+  </div>
+  <div class="card">
+   <div class="section-title">🧩 Add New Feature / Button</div>
+   <p style="font-size:11px;color:var(--muted);line-height:1.7">Create a custom navigation shortcut for your prototype.</p>
+   <form id="featureForm">
+    <div class="field"><label>Feature Name</label><input id="featureName" required maxlength="30" placeholder="Example: My Community"></div>
+    <div class="field"><label>Icon (emoji)</label><input id="featureIcon" maxlength="4" placeholder="🌟"></div>
+    <button class="btn">＋ Add Feature</button>
+   </form>
+   <div id="customFeatures" style="margin-top:12px"></div>
+  </div>
+  <div class="card">
+   <div class="section-title">🔐 Privacy & Data</div>
+   <div class="setting-row"><div><b style="font-size:13px">Local Demo Storage</b><small>Data stays in this browser</small></div><span style="color:#159c72;font-size:11px">Active</span></div>
+   <div class="setting-row"><div><b style="font-size:13px">Clear Demo Data</b><small>Remove locally stored WCB data</small></div><button class="btn danger" onclick="clearDemo()">Clear</button></div>
+   <p style="font-size:10px;color:var(--muted);margin-top:12px">This prototype does not provide production-grade accounts, encryption or cloud backups.</p>
+  </div>
+ </div>
+</section>
+
+<div class="footer">WORLD CONNECT BD · WCB · ONE WORLD. ONE NETWORK.<br>Prototype Version 1.0.0 · Founded by Salman Farshi · 2026</div>
+</div>
+</main>
+</div>
+
+<div class="modal" id="featureModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3 id="modalTitle">Feature</h3><button class="icon-btn" onclick="closeModal()">✕</button></div>
+  <div id="modalContent"></div>
+ </div>
+</div>
+
+<div class="login-screen" id="loginScreen">
+ <div class="card login-box">
+  <div class="logo">WCB</div>
+  <h1>WORLD CONNECT BD</h1>
+  <p>One World. One Network.<br>Welcome to the WCB prototype.</p>
+  <form id="loginForm" style="margin-top:20px">
+   <div class="field"><label>Your Display Name</label><input id="loginName" required maxlength="40" placeholder="Enter a display name"></div>
+   <button class="btn">Enter Demo Workspace</button>
+  </form>
+  <p style="margin-top:15px">Demo access only. No password or real account is required.</p>
+ </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const get = (key, fallback) => {
+ try { const v=localStorage.getItem("wcb_"+key); return v===null?fallback:JSON.parse(v); }
+ catch(e){ return fallback; }
+};
+const save = (key,value) => localStorage.setItem("wcb_"+key,JSON.stringify(value));
+
+let currentName=get("name","WCB Member");
+let currentChat="WCB Support";
+let posts=get("posts",[
+ {name:"WORLD CONNECT BD",text:"Welcome to the first WCB prototype! Our vision is to build a modern platform that connects people and communities.",likes:3},
+ {name:"Community Team",text:"A connected world begins with respectful communication, useful ideas and positive communities.",likes:2}
+]);
+let notices=get("notices",[
+ {title:"Welcome to WCB!",text:"Welcome to the first prototype of WORLD CONNECT BD. Explore the demo features."}
+]);
+let customFeatures=get("features",[]);
+let chatData=get("chats",{});
+let notificationData=get("notifications",["Welcome to WORLD CONNECT BD — your prototype is ready."]);
+
+function toast(message){
+ const el=$("toast");el.textContent=message;el.classList.add("show");
+ setTimeout(()=>el.classList.remove("show"),2600);
+}
+function showPage(name){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ const page=$("page-"+name);if(page)page.classList.add("active");
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
+ $("sidebar").classList.remove("open");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+$("menuBtn").onclick=()=>$("sidebar").classList.toggle("open");
+
+function setTheme(dark){
+ document.body.classList.toggle("dark",dark);
+ $("darkToggle").checked=dark;
+ $("themeBtn").textContent=dark?"☀":"☾";
+ save("dark",dark);
+}
+$("themeBtn").onclick=()=>setTheme(!document.body.classList.contains("dark"));
+$("darkToggle").onchange=e=>setTheme(e.target.checked);
+setTheme(get("dark",false));
+
+function updateName(){
+ const first=(currentName.trim()[0]||"W").toUpperCase();
+ ["topAvatar","feedAvatar","profileAvatar"].forEach(id=>$(id).textContent=first);
+ $("profileDisplayName").textContent=currentName;
+ $("feedName").textContent=currentName;
+ $("nameInput").value=currentName;
+}
+updateName();
+
+function renderPosts(){
+ $("postsContainer").innerHTML="";
+ posts.forEach((p,i)=>{
+  const el=document.createElement("div");el.className="card post";
+  const head=document.createElement("div");head.className="post-head";
+  const avatar=document.createElement("div");avatar.className="avatar";avatar.textContent=(p.name[0]||"W").toUpperCase();
+  const identity=document.createElement("div");const b=document.createElement("b");b.textContent=p.name;
+  const small=document.createElement("small");small.textContent="Community post · Demo";
+  identity.append(b,small);head.append(avatar,identity);
+  const body=document.createElement("div");body.className="post-body";body.textContent=p.text;
+  const actions=document.createElement("div");actions.className="post-actions";
+  const like=document.createElement("button");like.textContent="♥ "+p.likes+" Like";
+  like.onclick=()=>{posts[i].likes++;save("posts",posts);renderPosts()};
+  const comment=document.createElement("button");comment.textContent="▢ Comment";
+  comment.onclick=()=>openComments(i);
+  actions.append(like,comment);el.append(head,body,actions);$("postsContainer").append(el);
+ });
+ $("postCount").textContent=posts.length;
+}
+function openComments(i){
+ $("modalTitle").textContent="Comments";
+ $("modalContent").innerHTML="";
+ const info=document.createElement("p");info.textContent="Commenting is a local prototype feature.";
+ info.style.cssText="font-size:12px;color:var(--muted);margin-bottom:12px";
+ const form=document.createElement("form");form.className="field";
+ const input=document.createElement("input");input.placeholder="Write a comment...";
+ input.required=true;input.maxLength=250;
+ const btn=document.createElement("button");btn.className="btn";btn.textContent="Add Comment";
+ form.append(input,btn);
+ form.onsubmit=e=>{e.preventDefault();toast("Demo comment added.");closeModal()};
+ $("modalContent").append(info,form);$("featureModal").classList.add("show");
+}
+$("postForm").onsubmit=e=>{
+ e.preventDefault();const text=$("postInput").value.trim();if(!text)return;
+ posts.unshift({name:currentName,text,likes:0});save("posts",posts);
+ $("postInput").value="";renderPosts();toast("Your demo post has been published.");
+};
+
+function selectChat(name,initial){
+ currentChat=name;$("chatName").textContent=name;$("chatAvatar").textContent=initial;
+ document.querySelectorAll(".chat-person").forEach(el=>el.classList.remove("selected"));
+ event?.currentTarget?.classList.add("selected");
+ renderMessages();
+}
+function renderMessages(){
+ const box=$("messages");box.innerHTML="";
+ const items=chatData[currentChat]||[];
+ if(!items.length){
+  const welcome=document.createElement("div");welcome.className="bubble";
+  welcome.textContent="This is a sample conversation. Send a message to test the interface.";
+  box.append(welcome);
+ }
+ items.forEach(m=>{
+  const b=document.createElement("div");b.className="bubble"+(m.mine?" mine":"");b.textContent=m.text;box.append(b);
+ });
+ box.scrollTop=box.scrollHeight;
+}
+$("chatForm").onsubmit=e=>{
+ e.preventDefault();const text=$("chatInput").value.trim();if(!text)return;
+ chatData[currentChat]=chatData[currentChat]||[];
+ chatData[currentChat].push({text,mine:true});save("chats",chatData);
+ $("chatInput").value="";renderMessages();
+ $("messageCount").textContent=Object.values(chatData).reduce((n,a)=>n+a.length,0);
+};
+
+function renderNotices(){
+ $("dashboardNotices").innerHTML="";
+ $("noticeManageList").innerHTML="";
+ notices.forEach((n,i)=>{
+  const box=document.createElement("div");box.className="notice";
+  const strong=document.createElement("strong");strong.textContent=n.title;
+  const detail=document.createElement("span");detail.textContent=n.text;
+  box.append(strong,detail);$("dashboardNotices").append(box);
+  const row=document.createElement("div");row.style.cssText="display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:11px";
+  const title=document.createElement("span");title.textContent=n.title;
+  const del=document.createElement("button");del.className="btn danger";del.textContent="Delete";del.onclick=()=>{notices.splice(i,1);save("notices",notices);renderNotices()};
+  row.append(title,del);$("noticeManageList").append(row);
+ });
+ if(!notices.length)$("dashboardNotices").innerHTML='<div class="empty">No active notices.</div>';
+}
+$("noticeForm").onsubmit=e=>{
+ e.preventDefault();notices.unshift({title:$("noticeTitle").value.trim(),text:$("noticeText").value.trim()});
+ save("notices",notices);e.target.reset();renderNotices();toast("Notice published in this demo.");
+};
+
+function renderFeatures(){
+ $("customFeatures").innerHTML="";
+ customFeatures.forEach((f,i)=>{
+  const row=document.createElement("div");row.className="setting-row";
+  const name=document.createElement("span");name.textContent=(f.icon||"⭐")+" "+f.name;
+  const del=document.createElement("button");del.className="btn danger";del.textContent="Remove";
+  del.onclick=()=>{customFeatures.splice(i,1);save("features",customFeatures);renderFeatures()};
+  row.append(name,del);$("customFeatures").append(row);
+ });
+}
+$("featureForm").onsubmit=e=>{
+ e.preventDefault();customFeatures.push({name:$("featureName").value.trim(),icon:$("featureIcon").value.trim()||"⭐"});
+ save("features",customFeatures);e.target.reset();renderFeatures();toast("Custom feature added to settings.");
+};
+
+$("profileForm").onsubmit=e=>{
+ e.preventDefault();currentName=$("nameInput").value.trim()||"WCB Member";
+ save("name",currentName);updateName();toast("Demo profile updated.");
+};
+
+function renderNotifications(){
+ $("notificationList").innerHTML="";
+ notificationData.forEach(item=>{
+  const row=document.createElement("div");row.className="activity-item";row.style.marginBottom="15px";
+  const dot=document.createElement("span");dot.className="dot";
+  const text=document.createElement("div");text.textContent=item;
+  row.append(dot,text);$("notificationList").append(row);
+ });
+ $("notificationCount").textContent=notificationData.length;
+}
+function closeModal(){$("featureModal").classList.remove("show")}
+function clearDemo(){
+ if(!confirm("Clear locally stored WCB demo data?"))return;
+ Object.keys(localStorage).filter(k=>k.startsWith("wcb_")).forEach(k=>localStorage.removeItem(k));
+ location.reload();
+}
+$("languageSelect").onchange=e=>{
+ toast(e.target.value==="en"?"English selected. Full translation is planned for a future version.":"বাংলা নির্বাচন করা হয়েছে। সম্পূর্ণ অনুবাদ পরবর্তী সংস্করণে যুক্ত হবে।");
+};
+$("searchInput").onkeydown=e=>{
+ if(e.key==="Enter"){
+  const q=e.target.value.toLowerCase();
+  if(q.includes("chat")||q.includes("message"))showPage("messages");
+  else if(q.includes("post")||q.includes("feed"))showPage("feed");
+  else if(q.includes("setting"))showPage("settings");
+  else if(q.includes("contact"))showPage("contacts");
+  else toast("Try: messages, feed, settings or contacts.");
+ }
+};
+$("loginForm").onsubmit=e=>{
+ e.preventDefault();currentName=$("loginName").value.trim()||"WCB Member";
+ save("name",currentName);updateName();$("loginScreen").classList.remove("show");
+ toast("Welcome to WCB demo workspace!");
+};
+
+renderPosts();renderNotices();renderFeatures();renderNotifications();renderMessages();
+$("messageCount").textContent=Object.values(chatData).reduce((n,a)=>n+a.length,0);
+$("contactCount").textContent="3";
+</script>
+</body>
+</html>
